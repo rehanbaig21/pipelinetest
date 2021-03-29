@@ -10,7 +10,7 @@ stage('Scanning the API') {
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > /tmp/$DOCKER_TAG.txt
          sudo enscript -p /tmp/$DOCKER_TAG.ps /tmp/$DOCKER_TAG.txt
-         sudo ps2pdf /tmp/$DOCKER_TAG.ps $DOCKER_IMAGE.pdf
+         sudo ps2pdf /tmp/$DOCKER_TAG.ps $DOCKER_TAG.pdf
          ls -al /tmp
         '''
       }
