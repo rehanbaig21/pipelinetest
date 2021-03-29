@@ -2,12 +2,6 @@ pipeline {
   agent any
 
   stages {
-    stage('Dev ECR Login') {
-      steps {
-        sh 'env'
-        sh '$(aws ecr get-login --no-include-email --region ca-central-1)'
-      }
-    }
 stage('Scanning the API') {
       steps {
         sh '''
