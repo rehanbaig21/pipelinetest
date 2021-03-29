@@ -8,8 +8,8 @@ stage('Scanning the API') {
          aws --version
          
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1
-         /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > /tmp/$DOCKER_IMAGE.txt
-         enscript -p /tmp/scan.ps /tmp/$DOCKER_IMAGE.txt
+         /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > /tmp/$DOCKER_TAG.txt
+         enscript -p /tmp/scan.ps /tmp/$DOCKER_TAG.txt
          ps2pdf /tmp/scan.psf $DOCKER_IMAGE.pdf
          ls -al /tmp
         '''
