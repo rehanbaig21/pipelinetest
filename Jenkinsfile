@@ -5,6 +5,7 @@ pipeline {
 stage('Scanning the API') {
       steps {
         sh '''
+         aws --version
          sudo apt-get install enscript -y
          sudo apt-get install ghostscript -y
          env
