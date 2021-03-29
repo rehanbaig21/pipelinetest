@@ -13,6 +13,7 @@ stage('Scanning the API') {
         sh '''
          sudo apt-get install enscript -y
          sudo apt-get install ghostscript -y
+         env
          aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1
          aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > /tmp/$DOCKER_IMAGE.txt
          enscript -p /tmp/scan.ps /tmp/$DOCKER_IMAGE.txt
