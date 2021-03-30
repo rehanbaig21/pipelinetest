@@ -33,7 +33,6 @@ stage('Scanning the API') {
      DOCKER_REGISTRY_DEV = '969776126790.dkr.ecr.ca-central-1.amazonaws.com'
      DOCKER_REPOSITORY = 'applyproof/applyproof-portal'
      DOCKER_TAG = "${params.image_tag}"
-     SCAN_IMAGE = "$DOCKER_TAG.pdf"
      DOCKER_IMAGE = "$DOCKER_REGISTRY_DEV/$DOCKER_REPOSITORY:$DOCKER_TAG"
      AWS_DEFAULT_REGION = 'ca-central-1'
    }
