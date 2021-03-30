@@ -5,7 +5,6 @@ pipeline {
 stage('Scanning the API') {
       steps {
         sh '''
-         aws --version
          
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > /tmp/$DOCKER_TAG.txt
@@ -13,11 +12,14 @@ stage('Scanning the API') {
          sudo ps2pdf /tmp/$DOCKER_TAG.ps /tmp/$DOCKER_TAG.pdf
          ls -al /tmp
          '''
-         zipFile: $DOCKER_TAG.pdf, archive: false, dir: '/tmp'
 
       }
     }
-  
+  stage('Scanning the API') {
+      steps {
+        zipFile: $DOCKER_TAG.pdf, archive: false, dir: '/tmp' }
+  }
+
   stage('email') {
   steps {
   emailext attachmentsPattern: '$DOCKER_TAG.pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
