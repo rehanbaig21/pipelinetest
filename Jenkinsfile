@@ -17,10 +17,11 @@ stage('Scanning the API') {
     }
   
   stage('email') {
-
+  steps {
   emailext body: 'Test Message',
     subject: 'Test Subject',
     to: 'mirza.baig@applyboard.com'
+  }
   }
   }
   environment {
