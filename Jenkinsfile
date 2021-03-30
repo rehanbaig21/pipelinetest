@@ -13,7 +13,7 @@ stage('Scanning the API') {
          sudo ps2pdf /tmp/$DOCKER_TAG.ps /tmp/$DOCKER_TAG.pdf
          ls -al /tmp
          '''
-         zipFile: '$DOCKER_TAG.pdf', archive: false, dir: '/tmp'
+         zipFile: $DOCKER_TAG.pdf, archive: false, dir: '/tmp'
 
       }
     }
