@@ -18,7 +18,7 @@ stage('Scanning the API') {
   
   stage('email') {
   steps {
-  emailext body: '$DOCKER_IMAGE Vuln Scan Result',
+  emailext body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $DOCKER_IMAGE',
     subject: '$DOCKER_IMAGE Vuln Scan Result',
     attachment: '/tmp/$DOCKER_TAG.pdf'
     to: 'mirza.baig@applyboard.com'
