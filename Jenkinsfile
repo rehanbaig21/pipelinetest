@@ -7,8 +7,8 @@ stage('Scanning the API') {
         sh '''
          
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1
-         /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > ./$DOCKER_TAG.txt
-         sudo enscript -p /tmp/$DOCKER_TAG.ps ./$DOCKER_TAG.txt
+         /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > ./$DOCKER_REPOSITORY:$DOCKER_TAG_Vuln_Scan_Result.txt
+         sudo enscript -p /tmp/$DOCKER_TAG.ps ./$DOCKER_REPOSITORY:$DOCKER_TAG_Vuln_Scan_Result.txt
          sudo ps2pdf /tmp/$DOCKER_TAG.ps ./$DOCKER_TAG.pdf
          ls -al ./
          '''
@@ -19,6 +19,7 @@ stage('Scanning the API') {
 
   stage('email') {
   steps {
+  set +x
   emailext attachmentsPattern: '7fc6f40431be2c24257d52697980cd565cdc550c-7fc6f40.pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
     subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
     mimeType: 'text/html',to: "mirza.baig@applyboard.com"
