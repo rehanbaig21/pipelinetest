@@ -20,7 +20,7 @@ stage('Scanning the API') {
   stage('email') {
   steps {
   sh 'set +x'
-    emailext attachmentsPattern: '"${DOCKER_TAG}".pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
+    emailext attachmentsPattern: "${DOCKER_TAG}".pdf, body: '''${SCRIPT, template="groovy-html.template"}''', 
     subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
     mimeType: 'text/html',to: "mirza.baig@applyboard.com"
     
