@@ -18,8 +18,9 @@ stage('Scanning the API') {
   
   stage('email') {
   steps {
-  emailext body: 'Test Message',
-    subject: 'Test Subject',
+  emailext body: '$DOCKER_IMAGE Vuln Scan Result',
+    subject: '$DOCKER_IMAGE Vuln Scan Result',
+    attachment: '/tmp/$DOCKER_TAG.pdf'
     to: 'mirza.baig@applyboard.com'
   }
   }
