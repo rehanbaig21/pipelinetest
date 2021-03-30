@@ -12,16 +12,20 @@ stage('Scanning the API') {
          sudo enscript -p /tmp/$DOCKER_TAG.ps /tmp/$DOCKER_TAG.txt
          sudo ps2pdf /tmp/$DOCKER_TAG.ps /tmp/$DOCKER_TAG.pdf
          ls -al /tmp
-        '''
+         '''
+         zipFile: '$DOCKER_TAG.pdf', archive: false, dir: '/tmp'
+
       }
     }
   
   stage('email') {
   steps {
-  emailext body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $DOCKER_IMAGE',
-    subject: '$DOCKER_IMAGE Vuln Scan Result',
+  emailext attachmentsPattern: '$DOCKER_TAG.pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
+    subject: "$DOCKER_IMAGE Vuln Scan Result",
     attachment: '/tmp/$DOCKER_TAG.pdf'
-    to: 'mirza.baig@applyboard.com'
+    mimeType: 'text/html',to: "mirza.baig@applyboard.com"
+    
+ 
   }
   }
   }
