@@ -22,8 +22,8 @@ stage('Scanning the API') {
   steps {
     sh  'export SCAN_IMAGE=$DOCKER_TAG.pdf'
     sh 'printenv'
-    echo "Database engine is ${env.PROJECT_NAME}"
-    emailext attachmentsPattern: '${env.PROJECT_NAME}.pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
+    echo "Database engine is ${env.DOCKER_TAG}"
+    emailext attachmentsPattern: '${env.DOCKER_TAG}.pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
     subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
     mimeType: 'text/html',to: "mirza.baig@applyboard.com"
     
