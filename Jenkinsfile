@@ -20,7 +20,7 @@ stage('Scanning the API') {
   stage('email') {
   steps {
   sh 'set +x'
-    emailext attachmentsPattern: "${DOCKER_TAG}".pdf, body: '''${SCRIPT, template="groovy-html.template"}''', 
+    emailext attachmentsPattern: '$SCAN_IMAGE', body: '''${SCRIPT, template="groovy-html.template"}''', 
     subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
     mimeType: 'text/html',to: "mirza.baig@applyboard.com"
     
@@ -33,6 +33,7 @@ stage('Scanning the API') {
      DOCKER_REGISTRY_DEV = '969776126790.dkr.ecr.ca-central-1.amazonaws.com'
      DOCKER_REPOSITORY = 'applyproof/applyproof-portal'
      DOCKER_TAG = "${params.image_tag}"
+     SCAN_IMAGE = "$DOCKER_TAG.pdf"
      DOCKER_IMAGE = "$DOCKER_REGISTRY_DEV/$DOCKER_REPOSITORY:$DOCKER_TAG"
      AWS_DEFAULT_REGION = 'ca-central-1'
    }
