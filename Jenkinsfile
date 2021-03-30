@@ -20,6 +20,7 @@ stage('Scanning the API') {
 
   stage('email') {
   steps {
+    sh  'export SCAN_IMAGE=$DOCKER_TAG.pdf'
     sh 'printenv'
     sh 'printenv | grep SCAN_IMAGE'
     emailext attachmentsPattern: '$SCAN_IMAGE', body: '''${SCRIPT, template="groovy-html.template"}''', 
