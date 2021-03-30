@@ -16,12 +16,12 @@ stage('Scanning the API') {
       }
     }
   }
-  post {
-    always {
-      mail to: mirza.baig@applyboard.com, subject: ‘The Pipeline failed :(‘
-    }
-  }
+  stage('email') {
 
+  emailext body: 'Test Message',
+    subject: 'Test Subject',
+    to: 'mirza.baig@applyboard.com'
+  }
   environment {
      CONTEXT = 'dev'
      DOCKER_REGISTRY_DEV = '969776126790.dkr.ecr.ca-central-1.amazonaws.com'
