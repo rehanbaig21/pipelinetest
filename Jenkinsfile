@@ -18,9 +18,10 @@ stage('Scanning the API') {
   }
   post {
     always {
-      mail to: mirza.baig@applyboard.com, subject: '$DOCKER_IMAGE Scan Result'
+      mail to: mirza.baig@applyboard.com, subject: ‘The Pipeline failed :(‘
     }
   }
+
   environment {
      CONTEXT = 'dev'
      DOCKER_REGISTRY_DEV = '969776126790.dkr.ecr.ca-central-1.amazonaws.com'
