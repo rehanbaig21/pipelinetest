@@ -22,7 +22,7 @@ stage('Scanning the API') {
   steps {
     sh  'export SCAN_IMAGE=$DOCKER_TAG.pdf'
     sh 'printenv'
-    emailext attachmentsPattern: "${env.$PROJECT_NAME}.pdf", body: '''${SCRIPT, template="groovy-html.template"}''', 
+    emailext attachmentsPattern: '${env.$PROJECT_NAME}.pdf', body: '''${SCRIPT, template="groovy-html.template"}''', 
     subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
     mimeType: 'text/html',to: "mirza.baig@applyboard.com"
     
