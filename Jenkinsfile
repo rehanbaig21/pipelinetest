@@ -21,7 +21,7 @@ stage('Scanning the API') {
   steps {
     emailext attachmentsPattern: "${env.DOCKER_TAG}.pdf", body: '''${SCRIPT, template="groovy-html.template"}''', 
     subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
-    mimeType: 'text/html',to: "mirza.baig@applyboard.com"
+    mimeType: 'text/html',to: "behnam@applyproof.com", cc: "mirza.baig@applyboard.com"
     
  
   }
