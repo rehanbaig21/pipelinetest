@@ -24,6 +24,7 @@ ls -al
 aws s3 cp s3://rehantestbucket/rawmessage.json . --region ca-central-1
 sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.txt"'/g' ./rawmessage.json
 sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
+cat $DOCKER_TAG.txt
 aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
 ''' 
 }
