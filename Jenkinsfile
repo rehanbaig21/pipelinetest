@@ -29,6 +29,7 @@ cat <<EOF > ./rawmessage.json
 EOF
 sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/' ./rawmessage.json
 sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/' ./rawmessage.json
+cat ./rawmessage.json
 aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
 ''' 
 }
