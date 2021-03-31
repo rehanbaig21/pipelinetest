@@ -22,8 +22,7 @@ stage('Scanning the API') {
  sh '''
 ls -al
 touch ./rawmessage.json
-echo '{"Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: {SUBJECT}\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\n{SUBJECT}.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"{ATTACHMENT}\"\n\n {SUBJECT}.\n\n--NextPart--"}' > ./rawmessage.json
-sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
+echo '{"Data":"From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: {SUBJECT}\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\n{SUBJECT}.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"{ATTACHMENT}\"\n\n {SUBJECT}.\n\n--NextPart--"}sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g'}' > ./rawmessage.json
 sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawmessage.json
 cat ./rawmessage.json
 aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
