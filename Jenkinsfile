@@ -9,7 +9,6 @@ stage('Scanning the API') {
          /usr/local/bin/aws ecr describe-image-scan-findings --repository-name $DOCKER_REPOSITORY --image-id imageTag=$DOCKER_TAG --region ca-central-1 > ./$DOCKER_TAG.txt
          sudo enscript -p /tmp/$DOCKER_TAG.ps ./$DOCKER_TAG.txt
          sudo ps2pdf /tmp/$DOCKER_TAG.ps ./$DOCKER_TAG.pdf
-         export SCAN_IMAGE=$DOCKER_TAG.pdf
          ls -al ./
          '''
 
@@ -19,10 +18,20 @@ stage('Scanning the API') {
 
   stage('email') {
   steps {
-    emailext attachmentsPattern: "${env.DOCKER_TAG}.pdf", body: '''${SCRIPT, template="groovy-html.template"}''', 
-    subject: "$DOCKER_REPOSITORY:$DOCKER_TAG Vuln Scan Result",
-    mimeType: 'text/html',to: "behnam@applyproof.com"
-    
+    {
+ sh '''
+touch ./rawmessage.json
+cat <<EOF > ./rawmessage.json
+{
+   "Data": "From: sender@example.com\nTo: recipient@example.com\nSubject: Test email sent using the AWS CLI (contains an attachment)\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\nThis is the message body.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"attachment.txt\"\n\nThis is the text in the attachment.\n\n--NextPart--"
+}
+
+EOF
+sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/' ./rawmessage.json
+sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/' ./rawmessage.json
+aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
+''' 
+}
  
   }
   }
