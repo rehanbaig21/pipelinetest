@@ -24,24 +24,9 @@ ls -al
 touch ./rawmessage.json
 cat <<EOF > ./rawmessage.json
 {
-"Data": "From: mirza.baig@applyboard.com
-To: mirza.baig@applyboard.com
-Subject: {SUBJECT}: 1.0
-Content-type: Multipart/Mixed; boundary=\"NextPart\"
-
---NextPart
-Content-Type: text/plain
-
-{SUBJECT}
-
---NextPart
-Content-Type: text/plain;
-Content-Disposition: attachment; filename=\"{ATTACHMENT}\"
- {SUBJECT}.
---NextPart--"
+   "Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: REHAN-Vuln-Scan-Result-Vuln-Scan-Results\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\nThis is the message body.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"REHAN.pdf\"\n\n {SUBJECT}-Vuln-Scan-Results.\n\n--NextPart--"
 
 }
-
 
 EOF
 sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
