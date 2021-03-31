@@ -23,12 +23,14 @@ stage('Scanning the API') {
 touch ./rawmessage.json
 cat <<EOF > ./rawmessage.json
 {
-   "Data": "From: sender@example.com\nTo: recipient@example.com\nSubject: Test email sent using the AWS CLI (contains an attachment)\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\nThis is the message body.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"attachment.txt\"\n\nThis is the text in the attachment.\n\n--NextPart--"
+   "Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: {SUBJECT}-Vuln-Scan-Results\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\nThis is the message body.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"REHAN.pdf\"\n\n {SUBJECT}-Vuln-Scan-Results.\n\n--NextPart--"
+
 }
 
+
 EOF
-sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/' ./rawmessage.json
-sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/' ./rawmessage.json
+sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
+sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawmessage.json
 cat ./rawmessage.json
 aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
 ''' 
