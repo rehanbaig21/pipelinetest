@@ -22,7 +22,7 @@ stage('Scanning the API') {
  sh '''
 ls -al
 touch ./rawmessage.json
-echo "{"Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: {SUBJECT}\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\nContent-Transfer-Encoding: base64\n\n{BODY}\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"{FILENAME}\"\nContent-Transfer-Encoding: base64\n\n{ATTACHMENT}\n\n--NextPart--"}" > ./rawmessage.json
+echo '{"Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: {SUBJECT}\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\n{SUBJECT}.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"{ATTACHMENT}\"\n\n {SUBJECT}.\n\n--NextPart--"}' > ./rawmessage.json
 
 EOF
 sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
