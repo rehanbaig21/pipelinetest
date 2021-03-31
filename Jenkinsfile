@@ -18,7 +18,7 @@ stage('Scanning the API') {
 
   stage('email') {
   steps {
-    {
+    
  sh '''
 touch ./rawmessage.json
 cat <<EOF > ./rawmessage.json
