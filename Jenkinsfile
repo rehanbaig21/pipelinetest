@@ -24,7 +24,7 @@ ls -al
 touch ./rawmessage.json
 cat <<EOF > ./rawmessage.json
 {
-"Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: REHAN-Vuln-Scan-Result-Vuln-Scan-Results\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\n\nThis is the message body.\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"REHAN.pdf\"\n\n {SUBJECT}-Vuln-Scan-Results.\n\n--NextPart--"
+"Data": "From: mirza.baig@applyboard.com\nTo: mirza.baig@applyboard.com\nSubject: {SUBJECT}\nMIME-Version: 1.0\nContent-type: Multipart/Mixed; boundary=\"NextPart\"\n\n--NextPart\nContent-Type: text/plain\nContent-Transfer-Encoding: base64\n\n{BODY}\n\n--NextPart\nContent-Type: text/plain;\nContent-Disposition: attachment; filename=\"{FILENAME}\"\nContent-Transfer-Encoding: base64\n\n{ATTACHMENT}\n\n--NextPart--"
 }
 
 EOF
