@@ -26,7 +26,7 @@ sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.txt"'/g' ./rawmessage.json
 sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
 SR="$(cat $DOCKER_TAG.txt)"
 echo $SR
-sed -i "s/SCANRESULT/'${SR}'/g" ./rawmessage.json
+sed -i 's/SCANRESULT/${SR}/g' ./rawmessage.json
 aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
 ''' 
 }
