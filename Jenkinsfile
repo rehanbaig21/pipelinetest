@@ -21,10 +21,12 @@ stage('Scanning the API') {
  sh '''
 ls -al
 aws s3 cp s3://rehantestbucket/rawmessage.json . --region ca-central-1
-sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawmessage.json
-sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
+aws s3 cp s3://rehantestbucket/sendmail.sh . --region ca-central-1
+chmod +x sendmail.sh
+mv ./rawmessage.json  ses-email-template.json
+./sendmail.sh -s $DOCKER_TAG"-Vuln-Scan-Result -f mirza.baig@applyboard.com -r mirza.baig@applyboard.com -b "mail content" -a ./$DOCKER_TAG.pdf
+
 cat ./rawmessage.json
-aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
 ''' 
 }
  
