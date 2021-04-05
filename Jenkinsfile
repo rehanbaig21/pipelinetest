@@ -21,14 +21,11 @@ stage('Scanning the API') {
     
  sh '''
 ls -al
-aws s3 cp s3://rehantestbucket/rawmessage.json . --region ca-central-1
-sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.txt"'/g' ./rawmessage.json
-sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
-SR="$(cat $DOCKER_TAG.txt)"
-old_line=$(echo "${SR}" | sed -e 's/[]$.*[\^]/\\&/g' )
-echo $old_line
-sed -i "s/SCANRESULT/${old_line}/g" ./rawmessage.json
-aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
+aws s3 cp s3://rehantestbucket/rawemailmessage.json . --region ca-central-1
+sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawemailmessage.json
+sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawemailmessage.json
+cat ./rawemailmessage.json
+aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawemailmessage.json --region ca-central-1
 ''' 
 }
  
