@@ -20,7 +20,7 @@ stage('Scanning the API') {
     
  sh '''
 ls -al
-aws s3 cp s3://rehantestbucket/rawmessage.json --region ca-central-1
+aws s3 cp s3://rehantestbucket/rawmessage.json . --region ca-central-1
 sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawmessage.json
 sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
 cat ./rawmessage.json
