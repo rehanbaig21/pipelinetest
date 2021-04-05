@@ -15,17 +15,16 @@ stage('Scanning the API') {
       }
     }
  
-
   stage('email') {
   steps {
     
  sh '''
 ls -al
-aws s3 cp s3://rehantestbucket/rawemailmessage.json . --region ca-central-1
-sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawemailmessage.json
-sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawemailmessage.json
-cat ./rawemailmessage.json
-aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawemailmessage.json --region ca-central-1
+aws s3 cp s3://rehantestbucket/rawmessage.json. --region ca-central-1
+sed -i 's/{ATTACHMENT}/'"$DOCKER_TAG.pdf"'/g' ./rawmessage.json
+sed -i 's/{SUBJECT}/'"$DOCKER_TAG"-Vuln-Scan-Result'/g' ./rawmessage.json
+cat ./rawmessage.json.json
+aws ses send-raw-email --cli-binary-format raw-in-base64-out --raw-message file://rawmessage.json --region ca-central-1
 ''' 
 }
  
