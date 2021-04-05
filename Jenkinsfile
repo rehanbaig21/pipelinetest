@@ -24,7 +24,7 @@ aws s3 cp s3://rehantestbucket/rawmessage.json . --region ca-central-1
 aws s3 cp s3://rehantestbucket/sendmail.sh . --region ca-central-1
 chmod +x sendmail.sh
 mv ./rawmessage.json  ses-email-template.json
-./sendmail.sh -s $DOCKER_TAG"-Vuln-Scan-Result -f mirza.baig@applyboard.com -r mirza.baig@applyboard.com -b "mail content" -a ./$DOCKER_TAG.pdf
+./sendmail.sh -s $DOCKER_TAG"-Vuln-Scan-Result" -f mirza.baig@applyboard.com -r mirza.baig@applyboard.com -b "mail content" -a ./$DOCKER_TAG.pdf
 
 cat ./rawmessage.json
 ''' 
